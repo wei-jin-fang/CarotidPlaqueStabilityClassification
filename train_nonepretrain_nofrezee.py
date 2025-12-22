@@ -2,6 +2,7 @@
 基于MedicalNet预训练模型的颈动脉斑块分类训练脚本
 """
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 import argparse
 import json
 import random
@@ -500,7 +501,7 @@ def train(args):
 
     model = create_classifier(
         num_classes=2,
-        pretrained_path=args.pretrained_path,
+        pretrained_path=None,
         freeze_backbone=args.freeze_backbone
     )
     model = model.to(device)
@@ -649,10 +650,10 @@ def main():
 
     # 数据参数
     parser.add_argument('--root-dir', type=str,
-                       default='/media/data/wjf/data/Carotid_artery',
+                       default='/home/jinfang/project/CarotidPlaqueStabilityClassifier/data/Carotid_artery',
                        help='数据根��录')
     parser.add_argument('--label-excel', type=str,
-                       default='/media/data/wjf/data/label_all_250+30+100.xlsx',
+                       default='/home/jinfang/project/CarotidPlaqueStabilityClassifier/data/label_all.xlsx',
                        help='标签Excel文件')
     parser.add_argument('--output-dir', type=str, default='./output',
                        help='输出目录')
@@ -678,9 +679,9 @@ def main():
                        help='3D volume深度（图像序列长度）')
     parser.add_argument('--image-size', type=int, default=224,
                        help='图像尺寸')
-    parser.add_argument('--train-ratio', type=float, default=0.8,
+    parser.add_argument('--train-ratio', type=float, default=0.6,
                        help='训练集比例')
-    parser.add_argument('--val-ratio', type=float, default=0.1,
+    parser.add_argument('--val-ratio', type=float, default=0.2,
                        help='验证集比例')
 
     # 其他参数
