@@ -129,5 +129,4 @@ pretrain/**/*.pth
 trails/**/*.pth
 *.pth
 *.pt
-output/
 gradcam/test/

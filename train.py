@@ -565,7 +565,62 @@ def train(args):
         print(f"\n训练 - Loss: {train_loss:.4f}, Acc: {train_acc:.4f}")
         print(f"验证 - Loss: {val_metrics['loss']:.4f}, Acc: {val_metrics['accuracy']:.4f}, "
               f"F1: {val_metrics['f1']:.4f}, AUC: {val_metrics['auc']:.4f}")
+        # ============ 新增：每轮评估测试集 ============
+        if len(test_indices) > 0:
+            test_metrics_temp = validate(model, test_loader, criterion, device)
+            print(f"测试（本轮） - Acc: {test_metrics_temp['accuracy']:.4f}, "
+                  f"F1: {test_metrics_temp['f1']:.4f}, AUC: {test_metrics_temp['auc']:.4f} , Recall: {test_metrics_temp['recall']:.4f}, Precision: {test_metrics_temp['precision']:.4f}")    
+        '''
+        ------------------------------------------------------------
+        12
+        训练 - Loss: 1.1696, Acc: 0.5230
+        验证 - Loss: 0.7660, Acc: 0.4737, F1: 0.5833, AUC: 0.4944
+        测试（本轮） - Acc: 0.6842, F1: 0.6667, AUC: 0.6761 , Recall: 0.7500, Precision: 0.6000
+        ------------------------------------------------------------
+        Epoch 15/100
+        ------------------------------------------------------------
 
+        训练 - Loss: 1.0814, Acc: 0.5428
+        验证 - Loss: 0.6608, Acc: 0.4474, F1: 0.4615, AUC: 0.5278
+        测试（本轮） - Acc: 0.6316, F1: 0.5882, AUC: 0.6790 , Recall: 0.6250, Precision: 0.5556
+        ------------------------------------------------------------
+        Epoch 30/100
+        ------------------------------------------------------------
+
+        训练 - Loss: 0.7456, Acc: 0.4309
+        验证 - Loss: 0.6419, Acc: 0.6053, F1: 0.7059, AUC: 0.5528
+        测试（本轮） - Acc: 0.6579, F1: 0.6486, AUC: 0.6989 , Recall: 0.7500, Precision: 0.5714
+        ------------------------------------------------------------
+        Epoch 36/100
+        ------------------------------------------------------------
+
+        训练 - Loss: 0.7159, Acc: 0.4967
+        验证 - Loss: 0.6479, Acc: 0.4737, F1: 0.5833, AUC: 0.4306
+        测试（本轮） - Acc: 0.6053, F1: 0.6341, AUC: 0.6932 , Recall: 0.8125, Precision: 0.5200
+        ------------------------------------------------------------
+        Epoch 38/100
+        ------------------------------------------------------------
+
+        训练 - Loss: 0.7060, Acc: 0.4638
+        验证 - Loss: 0.6615, Acc: 0.6579, F1: 0.7347, AUC: 0.5306
+        测试（本轮） - Acc: 0.6842, F1: 0.6471, AUC: 0.7472 , Recall: 0.6875, Precision: 0.6111
+        ------------------------------------------------------------
+        Epoch 41/100
+        ------------------------------------------------------------
+
+        训练 - Loss: 0.7165, Acc: 0.4671
+        验证 - Loss: 0.6548, Acc: 0.5000, F1: 0.6122, AUC: 0.4583
+        测试（本轮） - Acc: 0.6842, F1: 0.6667, AUC: 0.7330 , Recall: 0.7500, Precision: 0.6000
+        ------------------------------------------------------------
+
+
+        '''
+        # if epoch in [11, 14, 29, 35, 37, 40]:
+        #     best_model_path = os.path.join(sub_dirs['models'], f'best_model_{epoch}.pth')
+        #     torch.save(model.state_dict(), best_model_path)
+        #     print(f"✓ 保存检测到的模型检查点: {best_model_path}")
+        # ============ 新增：每轮评估测试集 ============
+        
         # 保存最佳模型
         if val_metrics['accuracy'] > best_val_acc:
             best_val_acc = val_metrics['accuracy']

@@ -1,5 +1,5 @@
 /home/jinfang/anaconda3/envs/my_project/bin/python ./train.py \
-      --epochs 40 \
+      --epochs 100 \
       --batch-size 8 \
       --lr 5e-3 \
       --freeze-backbone \
