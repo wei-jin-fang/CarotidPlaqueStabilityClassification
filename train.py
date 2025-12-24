@@ -302,6 +302,59 @@ def evaluate_initial_loss(model, train_loader, val_loader, criterion, device):
     return initial_train_loss, initial_val_loss
 
 
+def save_dataset_samples_to_csv(train_dataset, val_dataset, test_dataset, save_dir):
+    """
+    保存训练集、验证集、测试集的样本名称到CSV文件
+
+    参数:
+        train_dataset: 训练数据集
+        val_dataset: 验证数据集
+        test_dataset: 测试数据集
+        save_dir: 保存目录（logs文件夹）
+    """
+    print("\n" + "="*60)
+    print("保存数据集样本名称...")
+    print("="*60)
+
+    # 提取训练集样本名称和标签
+    train_samples = []
+    for person in train_dataset.persons:
+        train_samples.append({
+            'patient_name': person['name'],
+            'label': person['label']
+        })
+    train_df = pd.DataFrame(train_samples)
+    train_csv_path = os.path.join(save_dir, 'train_samples.csv')
+    train_df.to_csv(train_csv_path, index=False, encoding='utf-8-sig')
+    print(f"✓ 训练集样本已保存: {train_csv_path} ({len(train_samples)} 样本)")
+
+    # 提取验证集样本名称和标签
+    val_samples = []
+    for person in val_dataset.persons:
+        val_samples.append({
+            'patient_name': person['name'],
+            'label': person['label']
+        })
+    val_df = pd.DataFrame(val_samples)
+    val_csv_path = os.path.join(save_dir, 'val_samples.csv')
+    val_df.to_csv(val_csv_path, index=False, encoding='utf-8-sig')
+    print(f"✓ 验证集样本已保存: {val_csv_path} ({len(val_samples)} 样本)")
+
+    # 提取测试集样本名称和标签
+    test_samples = []
+    for person in test_dataset.persons:
+        test_samples.append({
+            'patient_name': person['name'],
+            'label': person['label']
+        })
+    test_df = pd.DataFrame(test_samples)
+    test_csv_path = os.path.join(save_dir, 'test_samples.csv')
+    test_df.to_csv(test_csv_path, index=False, encoding='utf-8-sig')
+    print(f"✓ 测试集样本已保存: {test_csv_path} ({len(test_samples)} 样本)")
+
+    print("="*60 + "\n")
+
+
 def plot_loss_comparison(history, save_dir):
     """
     绘制四个子图比较loss曲线
@@ -493,6 +546,9 @@ def train(args):
         shuffle=False, num_workers=args.num_workers, pin_memory=True
     )
 
+    # 保存数据集样本名称到CSV
+    save_dataset_samples_to_csv(train_dataset, val_dataset, test_dataset, sub_dirs['logs'])
+
     # 创建模型
     print("\n" + "="*60)
     print("创建模型...")
@@ -616,9 +672,9 @@ def train(args):
 
         '''
         # if epoch in [11, 14, 29, 35, 37, 40]:
-        #     best_model_path = os.path.join(sub_dirs['models'], f'best_model_{epoch}.pth')
-        #     torch.save(model.state_dict(), best_model_path)
-        #     print(f"✓ 保存检测到的模型检查点: {best_model_path}")
+        #     temp_model_path = os.path.join(sub_dirs['models'], f'best_model_{epoch}.pth')
+        #     torch.save(model.state_dict(), temp_model_path)
+        #     print(f"✓ 保存检测到的模型检查点: {temp_model_path}")
         # ============ 新增：每轮评估测试集 ============
         
         # 保存最佳模型

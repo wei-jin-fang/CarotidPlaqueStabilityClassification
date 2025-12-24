@@ -1,0 +1,2 @@
+/home/jinfang/anaconda3/envs/my_project/bin/python test_mask.py \
+ --model-path  /home/jinfang/project/new_CarotidPlaqueStabilityClassification/output_mask/mask_guide_100_train_mask_20251223_210453/models/best_model.pth

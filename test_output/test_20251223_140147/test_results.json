@@ -1,0 +1,18 @@
+{
+    "test_accuracy": 0.631578947368421,
+    "test_precision": 0.5555555555555556,
+    "test_recall": 0.625,
+    "test_f1": 0.5882352941176471,
+    "test_auc": 0.6789772727272727,
+    "confusion_matrix": [
+        [
+            14,
+            8
+        ],
+        [
+            6,
+            10
+        ]
+    ],
+    "model_path": "./output/train_20251222_193941/models/best_model_14.pth"
+}

@@ -1,0 +1,12 @@
+/home/jinfang/anaconda3/envs/my_project/bin/python  train_mask.py \
+    --root-dir /media/data/wjf/data/Carotid_artery \
+    --mask-dir /media/data/wjf/data/mask \
+    --label-excel /media/data/wjf/data/label_all_250+30+100.xlsx \
+    --pretrained-path ./weights/resnet_18_23dataset.pth \
+    --output-dir ./output_mask \
+    --epochs 100 \
+    --batch-size 8 \
+    --lr 5e-3 \
+    --depth 100 \
+    --freeze-backbone \
+    --seed 42
