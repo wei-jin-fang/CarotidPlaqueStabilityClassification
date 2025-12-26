@@ -43,15 +43,15 @@ class ResNet3DClassifierWithMask(nn.Module):
         self.avgpool = nn.AdaptiveAvgPool3d((1, 1, 1))
 
         # ========== 分类头 ==========
-        self.fc1 = nn.Linear(512 * BasicBlock.expansion, 256)
-        self.bn_fc1 = nn.BatchNorm1d(256)
+        self.fc1 = nn.Linear(512 * BasicBlock.expansion, 128)
+        self.bn_fc1 = nn.BatchNorm1d(128)
         self.relu_fc1 = nn.ReLU(inplace=True)
         self.dropout1 = nn.Dropout(0.5)
 
-        self.fc2 = nn.Linear(256, 128)
+        self.fc2 = nn.Linear(128, 128)
         self.bn_fc2 = nn.BatchNorm1d(128)
         self.relu_fc2 = nn.ReLU(inplace=True)
-        self.dropout2 = nn.Dropout(0.5)
+        self.dropout2 = nn.Dropout(0.7)
 
         self.fc3 = nn.Linear(128, num_classes)
 

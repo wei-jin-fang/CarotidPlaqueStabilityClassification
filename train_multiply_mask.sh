@@ -4,9 +4,12 @@
     --label-excel /media/data/wjf/data/label_all_250+30+100.xlsx \
     --pretrained-path ./weights/resnet_18_23dataset.pth \
     --output-dir ./output_multiply_mask \
-    --epochs 100 \
+    --epochs 50 \
     --batch-size 8 \
-    --lr 5e-3 \
+    --lr 1e-3 \
     --depth 100 \
     --freeze-backbone \
     --seed 42
+
+    #     --lr 5e-3 \
+    # --epochs 100 \

@@ -1,0 +1,19 @@
+{
+    "best_epoch": 5,
+    "best_val_acc": 0.6052631578947368,
+    "test_accuracy": 0.5,
+    "test_precision": 0.42105263157894735,
+    "test_recall": 0.5,
+    "test_f1": 0.45714285714285713,
+    "test_auc": 0.4318181818181818,
+    "confusion_matrix": [
+        [
+            11,
+            11
+        ],
+        [
+            8,
+            8
+        ]
+    ]
+}

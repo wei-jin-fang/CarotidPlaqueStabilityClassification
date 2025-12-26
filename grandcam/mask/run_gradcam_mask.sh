@@ -2,7 +2,7 @@
 # GradCAM可视化运行脚本 - Mask引导模型版本
 
 # 配置
-MODEL_PATH="/home/jinfang/project/new_CarotidPlaqueStabilityClassification/output_mask/mask_guide_100_train_mask_20251223_210453/models/best_model.pth"
+MODEL_PATH="/home/jinfang/project/new_CarotidPlaqueStabilityClassification/output_adaptive_mask/train_adaptive_20251225_191020/models/best_model.pth"
 OUTPUT_DIR="./gradcam_visualizations_mask"
 TARGET_LAYER="layer4"  # 可选: layer1, layer2, layer3, layer4
 SEED=42  # 与训练时保持一致

@@ -130,3 +130,4 @@ trails/**/*.pth
 *.pth
 *.pt
 gradcam/test/
+Test/

@@ -1,0 +1,12 @@
+﻿patient_name,true_label,predicted_label,is_correct,prob_class_0,prob_class_1,confidence,mask_path
+熊彦会,0,1,False,0.0013698714319616556,0.998630166053772,0.998630166053772,/media/data/wjf/data/mask/熊彦会_mask.png
+万强,1,0,False,0.9749547243118286,0.02504531294107437,0.9749547243118286,/media/data/wjf/data/mask/万强_mask.png
+袁政,0,1,False,0.23655642569065094,0.7634435892105103,0.7634435892105103,/media/data/wjf/data/mask/袁政_mask.png
+肖发祥,1,0,False,0.972870409488678,0.027129564434289932,0.972870409488678,/media/data/wjf/data/mask/肖发祥_mask.png
+田玉堂,0,1,False,0.2663489580154419,0.7336510419845581,0.7336510419845581,/media/data/wjf/data/mask/田玉堂_mask.png
+李双京,1,0,False,0.7847484946250916,0.21525153517723083,0.7847484946250916,/media/data/wjf/data/mask/李双京_mask.png
+杨振华,0,1,False,0.14928050339221954,0.8507195115089417,0.8507195115089417,/media/data/wjf/data/mask/杨振华_mask.png
+刘巧真,0,1,False,0.30682826042175293,0.6931716799736023,0.6931716799736023,/media/data/wjf/data/mask/刘巧真_mask.png
+张凤,0,1,False,0.32522010803222656,0.6747798323631287,0.6747798323631287,/media/data/wjf/data/mask/张凤_mask.png
+顾文勇,0,1,False,0.20286406576633453,0.7971358895301819,0.7971358895301819,/media/data/wjf/data/mask/顾文勇_mask.png
+谢宝康,1,0,False,0.9742815494537354,0.025718504562973976,0.9742815494537354,/media/data/wjf/data/mask/谢宝康_mask.png
