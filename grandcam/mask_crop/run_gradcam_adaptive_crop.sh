@@ -3,7 +3,7 @@
 # 可视化基于裁剪后的244x244图像
 
 # 配置
-MODEL_PATH="/home/jinfang/project/new_CarotidPlaqueStabilityClassification/output_adaptive_mask/train_adaptive_20251225_191020/models/best_model.pth"
+MODEL_PATH="/home/jinfang/project/new_CarotidPlaqueStabilityClassification/output_adaptive_mask/train_adaptive_20251226_153334/models/best_model.pth"
 OUTPUT_DIR="./gradcam_visualizations_adaptive_crop"
 TARGET_LAYER="layer4"  # 可选: layer1, layer2, layer3, layer4
 SEED=42  # 与训练时保持一致
@@ -13,7 +13,7 @@ SPLIT="test"  # 可选: train, val, test, all
 MASK_DIR="/media/data/wjf/data/mask"
 
 # 自适应裁剪参数（需要与训练时保持一致）
-CROP_PADDING_RATIO=0.1  # 裁剪时bbox的padding比例
+CROP_PADDING_RATIO=0  # 裁剪时bbox的padding比例
 CROP_STRATEGY="adaptive"  # adaptive | pad_only | resize_only
 
 # 方式1: 可视化测试集的所有患者
@@ -32,7 +32,7 @@ python visualize_with_gradcam_adaptive_crop.py \
     --val-ratio 0.1 \
     --crop-padding-ratio ${CROP_PADDING_RATIO} \
     --crop-strategy ${CROP_STRATEGY} \
-    --max-samples 2  # 限制前N个样本,设为-1则全部可视化
+    --max-samples -1  # 限制前N个样本,设为-1则全部可视化
 
 # 方式2: 只可视化特定患者名称
 # python visualize_with_gradcam_adaptive_crop.py \

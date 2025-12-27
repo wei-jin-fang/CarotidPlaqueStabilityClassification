@@ -27,7 +27,8 @@ from sklearn.metrics import (
 )
 
 from utils.dataset_adaptive_mask import CarotidPlaqueDatasetWithAdaptiveMask
-from models.resnet3D_mask import create_mask_guided_classifier
+from models.resnet3D_mask_finetune import create_mask_guided_classifier
+
 
 
 def set_seed(seed=42):
@@ -577,7 +578,12 @@ def train(args):
             print(f"测试（本轮） - Acc: {test_metrics_temp['accuracy']:.4f}, "
                   f"F1: {test_metrics_temp['f1']:.4f}, AUC: {test_metrics_temp['auc']:.4f}, "
                   f"Recall: {test_metrics_temp['recall']:.4f}, Precision: {test_metrics_temp['precision']:.4f}")
-
+        # 保存最佳模型
+        if epoch in [30] or test_metrics_temp['accuracy'] >= 0.71:
+            temp_best_model_epoch = epoch + 1
+            temp_best_model_path = os.path.join(sub_dirs['models'], f'model_{temp_best_model_epoch}.pth')
+            torch.save(model.state_dict(), temp_best_model_path)
+            print(f"✓ 保存临时模型")
         # 保存最佳模型
         if val_metrics['accuracy'] > best_val_acc:
             best_val_acc = val_metrics['accuracy']

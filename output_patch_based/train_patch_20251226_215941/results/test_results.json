@@ -1,0 +1,21 @@
+{
+    "best_epoch": 11,
+    "best_val_acc": 0.5526315789473685,
+    "test_accuracy": 0.39473684210526316,
+    "test_precision": 0.3939393939393939,
+    "test_recall": 0.8125,
+    "test_f1": 0.5306122448979592,
+    "test_auc": 0.4914772727272727,
+    "confusion_matrix": [
+        [
+            2,
+            20
+        ],
+        [
+            3,
+            13
+        ]
+    ],
+    "patch_size": 24,
+    "max_patches_per_roi": 12
+}

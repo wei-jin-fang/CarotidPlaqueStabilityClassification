@@ -18,7 +18,7 @@ project_root = os.path.dirname(grandcam_dir)              # 项目根目录
 sys.path.append(project_root)
 
 from utils.dataset_adaptive_mask import CarotidPlaqueDatasetWithAdaptiveMask
-from models.resnet3D_mask import create_mask_guided_classifier
+from models.resnet3D_mask_finetune import create_mask_guided_classifier
 
 from gradcam_3d_adaptive_crop import GradCAM3DAdaptiveCrop
 

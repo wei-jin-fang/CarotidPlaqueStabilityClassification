@@ -2,6 +2,7 @@
 
 # 自适应裁剪版本训练脚本
 # 使用基于Mask的智能ROI裁剪替代传统resize
+echo "Starting training with adaptive mask cropping..."
 
 python train_adaptive_mask.py \
     --root-dir /media/data/wjf/data/Carotid_artery \
