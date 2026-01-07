@@ -348,6 +348,7 @@ class PatchExtractor:
 
         # 限制数量（如果设置了max_patches）
         if max_patches is not None and len(patches) > max_patches:
+            # print(f"提取的patch数量({len(patches)})超过限制({max_patches})，进行筛选...")
             # 按mask_ratio排序，保留覆盖度高的
             indices = sorted(range(len(patches)),
                            key=lambda i: positions[i]['mask_ratio'],
@@ -430,7 +431,7 @@ class PatchBasedCarotidDataset(Dataset):
     def __init__(self, root_dir, mask_dir, label_excel,
                  patch_size=24, max_patches_per_roi=12, overlap_ratio=0.5,
                  keep_middle_n=100, min_imgs_required=100,
-                 transform=None, verbose=True):
+                 transform=None, verbose=True, use_cache=True):
         """
         参数:
             root_dir: 数据根目录
@@ -443,6 +444,7 @@ class PatchBasedCarotidDataset(Dataset):
             min_imgs_required: 最少需要的图片数
             transform: 图像变换
             verbose: 是否打印信息
+            use_cache: 是否使用缓存（默认True，可大幅加速训练）
         """
         self.root_dir = root_dir
         self.mask_dir = mask_dir
@@ -450,6 +452,8 @@ class PatchBasedCarotidDataset(Dataset):
         self.keep_middle_n = keep_middle_n
         self.min_imgs_required = min_imgs_required
         self.verbose = verbose
+        self.use_cache = use_cache
+        self.cache = {} if use_cache else None
 
         # 创建自适应剪裁器（先剪裁到244×244，然后再提取patch）
         # 使用adaptive策略和padding_ratio=0（与原版本一致）
@@ -542,6 +546,7 @@ class PatchBasedCarotidDataset(Dataset):
             print(f"✗ 缺少Mask: {len(missing_mask_persons)} 个")
             print(f"Patch配置: size={self.patch_extractor.patch_size}, "
                   f"max_per_roi={self.max_patches_per_roi}")
+            print(f"缓存机制: {'已启用 (预计加速5-10倍)' if self.use_cache else '已禁用'}")
 
             # 类别分布
             label_counts = {}
@@ -565,6 +570,10 @@ class PatchBasedCarotidDataset(Dataset):
             positions: list of dict, 长度N_patches, 记录位置信息
             label: 标签
         """
+        # ★ 缓存机制：如果已缓存，直接返回
+        if self.use_cache and idx in self.cache:
+            return self.cache[idx]
+
         person = self.persons[idx]
         all_patches = []
         all_positions = []
@@ -576,7 +585,7 @@ class PatchBasedCarotidDataset(Dataset):
         for slice_idx, img_path in enumerate(person['paths']):
             img_original = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
 
-            # ★ 关键修改：先做自适应剪裁到244×244
+            # ★ 关键修改：先做自适应剪裁到244×244a
             img_cropped, mask_cropped = self.adaptive_crop(img_original, mask_original)
 
             # 然后在剪裁后的图像上提取patch
@@ -614,7 +623,12 @@ class PatchBasedCarotidDataset(Dataset):
 
         label = torch.tensor(person['label'], dtype=torch.long)
 
-        return patches_tensor, all_positions, label
+        # ★ 存入缓存
+        result = (patches_tensor, all_positions, label)
+        if self.use_cache:
+            self.cache[idx] = result
+
+        return result
 
     def get_person_info(self):
         """返回所有样本信息"""

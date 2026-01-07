@@ -27,6 +27,9 @@ batch_sizes=(8 4)
 learning_rates=(1e-3 1e-4 5e-4)
 feature_dims=(256 64 128)
 
+batch_sizes=(8)
+learning_rates=(1e-3)
+feature_dims=(64)
 # 总共组合数：3 × 3 × 3 = 27 次训练
 total=$(( ${#batch_sizes[@]} * ${#learning_rates[@]} * ${#feature_dims[@]} ))
 count=0

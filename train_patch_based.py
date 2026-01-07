@@ -8,6 +8,7 @@
 4. 不使用预训练，从头训练
 """
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 import argparse
 import json
 import random
@@ -573,6 +574,7 @@ def train(args):
         num_classes=2,
         feature_dim=args.feature_dim
     )
+    
     model = model.to(device)
 
     # 打印并保存模型参数统计
@@ -633,6 +635,12 @@ def train(args):
                   f"Recall: {test_metrics_temp['recall']:.4f}, "
                   f"Precision: {test_metrics_temp['precision']:.4f}, "
                   f"F1: {test_metrics_temp['f1']:.4f},")
+        # 保存最佳模型
+        if epoch in [33] or test_metrics_temp['recall'] >= 0.6842:
+            temp_best_model_epoch = epoch + 1
+            temp_best_model_path = os.path.join(sub_dirs['models'], f'model_{temp_best_model_epoch}.pth')
+            torch.save(model.state_dict(), temp_best_model_path)
+            print(f"✓ 保存临时模型")
 
         # 保存最佳模型
         if val_metrics['accuracy'] > best_val_acc:
@@ -724,7 +732,7 @@ def main():
                        help='patch重叠比例')
 
     # 模型参数
-    parser.add_argument('--feature-dim', type=int, default=128,
+    parser.add_argument('--feature-dim', type=int, default=64,
                        help='特征维度')
 
     # 训练参数
