@@ -222,7 +222,6 @@ def visualize_single_slice(img, mask, positions, attention_weights,
 
     slice_positions = [positions[i] for i in slice_indices]
     slice_attention = attention_weights[slice_indices]
-
     # 创建attention热力图
     h, w = img.shape
     heatmap = np.zeros((h, w), dtype=np.float32)
@@ -236,7 +235,7 @@ def visualize_single_slice(img, mask, positions, attention_weights,
     # 平均
     valid_mask = count_map > 0
     heatmap[valid_mask] /= count_map[valid_mask]
-
+    
     # 归一化
     if heatmap.max() > 0:
         heatmap = (heatmap - heatmap.min()) / (heatmap.max() - heatmap.min())
@@ -259,7 +258,7 @@ def visualize_single_slice(img, mask, positions, attention_weights,
         pos = slice_positions[idx]
         x1, y1, x2, y2 = pos['bbox']
         weight = slice_attention[idx]
-
+        # print(f"    Patch #{rank+1}: BBox=({x1},{y1},{x2},{y2}), Attn={weight:.4f}")
         # 绘制边界框（第一名绿色粗框，其他黄色细框）
         color = (0, 255, 0) if rank == 0 else (255, 255, 0)
         thickness = 3 if rank == 0 else 2

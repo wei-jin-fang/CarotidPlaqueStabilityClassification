@@ -212,7 +212,7 @@ def visualize_single_slice(img, mask, positions, attention_weights,
 
     slice_positions = [positions[i] for i in slice_indices]
     slice_attention = attention_weights[slice_indices]
-    
+
     print(f"\n切片 {slice_idx} 信息:")
     print(f"  - Patch数量: {len(slice_indices)}")
     print(f"  - Attention范围: [{slice_attention.min():.4f}, {slice_attention.max():.4f}]")

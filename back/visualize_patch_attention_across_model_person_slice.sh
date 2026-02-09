@@ -5,8 +5,8 @@ echo "============================================================"
 echo "模型路径: $MODEL_PATH"
 python visualize_patch_attention_across_model_person_slice.py \
       --model-path "$MODEL_PATH" \
-      --patient-name "陈向东" \
-      --slice-idx 65 \
+      --patient-name "李必勇" \
+      --slice-idx 43 \
       --split test \
       --feature-dim 64 \
       --patch-size 24 \
